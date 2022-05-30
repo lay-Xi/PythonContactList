@@ -52,10 +52,15 @@ def add_contact(contacts):
     address = input("Address: ")
 
     while True:
+        already_exists = False
         for contact in contacts:
             if (first_name.lower() == contact["first_name"] and last_name.lower() == contact["last_name"]):
                 print("A contact with this name already exists.")
+                already_exists = True    
                 break
+            
+        if (already_exists):
+            break
 
         if (not mobile.replace('-', '').isdigit()):
             print("Invalid mobile phone number.")
