@@ -104,7 +104,25 @@ def search_for_contact(contacts):
 
 
 def delete_contact(contacts):
-    pass
+    first_name = input("First Name: ")
+    last_name = input("Last Name: ")
+    selected_idx = -1
+
+    for idx, contact in enumerate(contacts):
+        if (first_name.lower() == contact["first_name"] and last_name.lower() == contact["last_name"]):
+            selected_idx = idx
+            break
+    
+    if (selected_idx == -1):
+        print("No contact with this name exists.")
+    else:
+        confirm = input("Are you sure you would like to delete this contact (y/n)? ")
+        
+        if (confirm == "y"):
+            del contacts[selected_idx]
+            print("Contact deleted!")
+
+    return contacts
 
 
 def _print_contact(id, contact):
@@ -131,6 +149,8 @@ def list_contacts(contacts):
 
 def main(contacts_path):
     print("Welcome to your contact list!")
+    print()
+    print()
     print("The following is a list of useable commands:")
     print('"add": Adds a contact.')
     print('"delete": Deletes a contact.')
@@ -144,9 +164,9 @@ def main(contacts_path):
         command = input("Type a command: ")
 
         if (command == "add"):
-            add_contact(contacts)
+            contacts = add_contact(contacts)
         elif (command == "delete"):
-            delete_contact(contacts)
+            contacts = delete_contact(contacts)
         elif (command == "list"):
             list_contacts(contacts)
         elif (command == "search"):
@@ -155,6 +175,8 @@ def main(contacts_path):
             write_contacts(contacts_path, contacts)
             print("Contacts were saved successfully.")
             break
+        else:
+            print("Unknown command.")
 
 
 if __name__ == "__main__":
