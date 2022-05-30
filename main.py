@@ -89,29 +89,44 @@ def add_contact(contacts):
 
 
 def search_for_contact(contacts):
-    pass
+    first_name = input("First Name: ")
+    last_name = input("Last Name: ")
+
+    filtered_contacts = []
+
+    for contact in contacts:
+        if (first_name.lower() in contact["first_name"] and last_name.lower() in contact["last_name"]):
+            filtered_contacts.append(contact)
+
+    print(f"Found {len(filtered_contacts)} matching contacts.")
+    for id, contact in enumerate(filtered_contacts):
+        _print_contact(id, contact)
 
 
 def delete_contact(contacts):
     pass
 
 
+def _print_contact(id, contact):
+    print(f"{id + 1}. {contact['first_name'].capitalize()} {contact['last_name'].capitalize()}")
+    if len(contact["mobile"]) > 0:
+        print(f"       Mobile: {contact['mobile']}") 
+    
+    if len(contact["home"]) > 0:
+        print(f"       Home: {contact['home']}") 
+    
+    if len(contact["email"]) > 0:
+        print(f"       Email: {contact['email']}") 
+    
+    if len(contact["address"]) > 0:
+        print(f"       Address: {contact['address']}") 
+
+
 def list_contacts(contacts):
     contacts.sort(key=lambda contact: contact["first_name"])
 
     for id, contact in enumerate(contacts):
-        print(f"{id + 1}. {contact['first_name'].capitalize()} {contact['last_name'].capitalize()}")
-        if len(contact["mobile"]) > 0:
-            print(f"       Mobile: {contact['mobile']}") 
-        
-        if len(contact["home"]) > 0:
-            print(f"       Home: {contact['home']}") 
-        
-        if len(contact["email"]) > 0:
-            print(f"       Email: {contact['email']}") 
-        
-        if len(contact["address"]) > 0:
-            print(f"       Address: {contact['address']}") 
+        _print_contact(id, contact)
 
 
 def main(contacts_path):
