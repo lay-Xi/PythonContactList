@@ -62,13 +62,14 @@ def add_contact(contacts):
         if (already_exists):
             break
 
-        if (not mobile.replace('-', '').isdigit()):
-            print("Invalid mobile phone number.")
-            break
-        else:
-            if (len(mobile.replace('-', '')) != 10):
+        if (len(mobile) > 0):
+            if (not mobile.replace('-', '').isdigit()):
                 print("Invalid mobile phone number.")
                 break
+            else:
+                if (len(mobile.replace('-', '')) != 10):
+                    print("Invalid mobile phone number.")
+                    break
 
         if (len(home) > 0 and not home.replace('-', '').isdigit()):
             print("Invalid home phone number.")
@@ -96,7 +97,21 @@ def delete_contact(contacts):
 
 
 def list_contacts(contacts):
-    pass
+    contacts.sort(key=lambda contact: contact["first_name"])
+
+    for id, contact in enumerate(contacts):
+        print(f"{id + 1}. {contact['first_name'].capitalize()} {contact['last_name'].capitalize()}")
+        if len(contact["mobile"]) > 0:
+            print(f"       Mobile: {contact['mobile']}") 
+        
+        if len(contact["home"]) > 0:
+            print(f"       Home: {contact['home']}") 
+        
+        if len(contact["email"]) > 0:
+            print(f"       Email: {contact['email']}") 
+        
+        if len(contact["address"]) > 0:
+            print(f"       Address: {contact['address']}") 
 
 
 def main(contacts_path):
