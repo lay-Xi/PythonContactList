@@ -44,7 +44,42 @@ def verify_email_address(email):
 
 
 def add_contact(contacts):
-    pass
+    first_name = input("First Name: ")
+    last_name = input("Last Name: ")
+    mobile = input("Mobile Phone Number: ")
+    home = input("Home Phone Number: ")
+    email = input("Email Address: ")
+    address = input("Address: ")
+
+    while True:
+        for contact in contacts:
+            if (first_name.lower() == contact["first_name"] and last_name.lower() == contact["last_name"]):
+                print("A contact with this name already exists.")
+                break
+
+        if (not mobile.replace('-', '').isdigit()):
+            print("Invalid mobile phone number.")
+            break
+        else:
+            if (len(mobile.replace('-', '')) != 10):
+                print("Invalid mobile phone number.")
+                break
+
+        if (len(home) > 0 and not home.replace('-', '').isdigit()):
+            print("Invalid home phone number.")
+            break
+
+        if (len(email) > 0 and not verify_email_address(email)):
+            print("Invalid email address.")
+            break
+
+        contacts.append({"first_name": first_name.lower(), "last_name": last_name.lower(),
+                     "mobile": mobile, "home": home, "email": email, "address": address})
+        
+        print("Contact Added!")
+        return contacts
+
+    print("You entered invalid information, this contact was not added.")
 
 
 def search_for_contact(contacts):
@@ -70,19 +105,21 @@ def main(contacts_path):
     print()
 
     contacts = read_contacts(contacts_path)
-    command = input("Type a command: ")
+    while True:
+        command = input("Type a command: ")
 
-    if (command == "add"):
-        pass
-    elif (command == "delete"):
-        pass
-    elif (command == "list"):
-        pass
-    elif (command == "search"):
-        pass
-    elif (command == "q"):
-        write_contacts(contacts_path, contacts)
-        print("Contacts were saved successfully.")
+        if (command == "add"):
+            add_contact(contacts)
+        elif (command == "delete"):
+            delete_contact(contacts)
+        elif (command == "list"):
+            list_contacts(contacts)
+        elif (command == "search"):
+            search_for_contact(contacts)
+        elif (command == "q"):
+            write_contacts(contacts_path, contacts)
+            print("Contacts were saved successfully.")
+            break
 
 
 if __name__ == "__main__":
